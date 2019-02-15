@@ -1,0 +1,25 @@
+\label{sec:08Conclusion}
+\section{Conclusion - Assessment}
+ 
+\subsection{Critics}
+Through this work, we have taken many decisions which have had consequences on our results, and which might be controversial.
+
+First, we have chosen to ignore the 1998-2012 period in our data. Indeed, this period seems to have a different behavior from the actual period, and has known particular political and economical events such as the stock market crash in 2001 or the global crisis in 2007. Some could say that the more you have data, the more your prediction will be good because of a bigger training sample for the model. But we think that, in our case, these additional data could affect our model badly, with a kind of influence from exceptional events like the crisis, and with daily data, we still have a lot of data to work on. 
+
+The choice of the model and which criterion to follow is also a controversial step. We need to take things into consideration for our model to fit but without over-fitting. Therefore we need to pay attention to the numbers of parameters we chose for describing the model, or if we should prioritize an AR model over an MA model according to previous data (an MA model is usually used to model a time series that shows short-term dependencies between successive observations, whereas AR is about long-term dependencies). 
+
+Such choices are part of the experience of a data scientist that we don't have yet. We think we can easily guess if we work on some time series linked to the weather or people holidays that they will probably have an important seasonal effect, but some kind of time series are really difficult to understand, and the only experience will allow us to efficiently work on them. 
+
+Finally, we have decided to be exhaustive in our report. We mean, even if some steps appear to be not useful in a real-world time series analysis, we wanted this report to serve as a working base for us, and so we have tried to deal with a maximum of concepts and ideas around time series analysis.
+
+\subsection{Further Discussion}
+When several models fit a given time series well, instead of selecting a single model, we can use all the models to produce a combined forecast. This technique is referred to as \textbf{model averaging} in the statistical literature, and could be a next step of our work. Suppose that there are $m$ models available and they all produce unbiased forecasts for a time series. By unbiased forecast, we mean that the expectation of the associated forecast error is 0. \\
+If $\hat{x}_{i,h+1}$ is the 1-step ahead forecast of model $i$ at the forecast origin $h$, then, a combined forecast is
+$$ \hat{x}_{h+1} = \sum_{i=1}^m w_i \hat{x}_{i,h+1}$$
+where $w_i$ is a nonnegative real number denoting the weight for model $i$ and satisfies $\sum_{i=1}^m w_i =1$. \\
+The weights $w_i$ can be determined in various ways. For example, in
+Bayesian inference, $w_i$ is the posterior probability of model $i$. Otherwise we can use the simple
+average, namely, $w_i = \frac{1}{m}$, which seems to work well in practice according to \cite{tsa2012}.
+
+
+

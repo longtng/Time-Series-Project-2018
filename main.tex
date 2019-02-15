@@ -1,0 +1,121 @@
+\documentclass[a4paper]{article}
+
+%% Language and font encodings
+\usepackage[english]{babel}
+\usepackage[utf8x]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{parskip}
+
+%% Sets page size and margins
+\usepackage[a4paper,top=3cm,bottom=2cm,left=3cm,right=3cm,marginparwidth=1.75cm]{geometry}
+
+%% Useful packages
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{tabularx}
+\usepackage[colorinlistoftodos]{todonotes}
+\usepackage[colorlinks=true, allcolors=blue]{hyperref}
+\usepackage{diagbox}
+\usepackage{fancyhdr}
+\usepackage{placeins}
+\usepackage{listings}
+ 
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[LE,RO]{Quantitative Computational Finance Program}
+\fancyhead[RE,LO]{John Von Neumann Institute}
+\fancyfoot[CE,LO]{Time Series Analytics and Forecasting}
+\fancyfoot[LE,RO]{\thepage}
+ 
+\renewcommand{\headrulewidth}{1pt}
+\renewcommand{\footrulewidth}{1pt}
+
+\begin{document}
+
+\begin{titlepage}
+
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}} % Defines a new command for the horizontal lines, change thickness here
+
+\center % Center everything on the page
+ 
+%----------------------------------------------------------------------------------------
+%	HEADING SECTIONS
+%----------------------------------------------------------------------------------------
+
+\textsc{\LARGE John Von Neumann Institute}\\[1.5cm] % Name of your university/college
+\textsc{\Large Quantitative Computational Finance Program}\\[0.5cm] % Major heading such as course name
+\textsc{\large 2017 - 2019}\\[0.5cm] % Minor heading such as course title
+
+%----------------------------------------------------------------------------------------
+%	TITLE SECTION
+%----------------------------------------------------------------------------------------
+
+\HRule \\[0.4cm]
+{ \huge \bfseries Time Series Analytics and Forecasting}\\[0.5cm] 
+{ \huge \bfseries Project Report}\\[0.4cm] 
+% Title of your document
+\HRule \\[1.5cm]
+ 
+%----------------------------------------------------------------------------------------
+%	AUTHOR SECTION
+%----------------------------------------------------------------------------------------
+
+\begin{minipage}{0.4\textwidth}
+\begin{flushleft} \large
+\emph{Students:}\\
+Valentine \textsc{CURE}\\ % Your name
+Long \textsc{NGUYEN}
+\end{flushleft}
+\end{minipage}
+~
+\begin{minipage}{0.4\textwidth}
+\begin{flushright} \large
+\emph{Supervisors:}\\
+\emph{Prof.:} Dr. Monique \textsc{PONTIER}\\ % Supervisor's Name
+\emph{T.A.:} MSc. Tai T. \textsc{NGUYEN}
+\end{flushright}
+\end{minipage}\\[3cm]
+
+% If you don't want a supervisor, uncomment the two lines below and remove the section above
+%\Large \emph{Author:}\\
+%John \textsc{Smith}\\[3cm] % Your name
+
+%----------------------------------------------------------------------------------------
+%	DATE SECTION
+%----------------------------------------------------------------------------------------
+
+{\large May 2018}\\[2cm] % Date, change the \today to a set date if you want to be precise
+
+%----------------------------------------------------------------------------------------
+%	LOGO SECTION
+%----------------------------------------------------------------------------------------
+
+\includegraphics[width=0.4\columnwidth]{jvnlogoh.png}\\[1cm] % Include a department/university logo - this will require the graphicx package
+ 
+%----------------------------------------------------------------------------------------
+
+\vfill % Fill the rest of the page with whitespace
+
+\end{titlepage}
+\newpage
+\begin{abstract}
+The Financial Time Series Analysis has a long history in the financial mathematics area with a vast amount of findings and methods in explanatory and forecasting. This report will mainly focus on the ARMA and GARCH modeling with the CAC 40 financial data, which is provided by Yahoo Finance. There are two main sections of the report which are the Theoretical Overview and the Case Study. The first part will be considered as a slight revision of the mandatory theory of Financial Time Series like the definition of Stationarity, Autocorrelation, ARCH model, GARCH model, etc. The second part would be the application of those theories on the CAC 40 financial data. Additionally, with the supporting of advanced development of R programming language, which has led to a faster calculation and fitting parameters of the model, the application section has smoothly gone through several stages such as data manipulation, visualizations, ARMA model fitting, ARMA residuals checking, GARCH model fitting. In short, the project report has illustrated a journey from mathematic logical proofs with computer programming support to figure out the real-life application on the CAC 40 stock market. 
+\end{abstract}
+
+\newpage
+\tableofcontents
+\newpage
+\input{sections/01Theoretical}
+\input{sections/02Preliminarystudies}
+\input{sections/03IdentifyARMAmodel}
+\input{sections/04TheResidualsanalysis}
+\input{sections/05IdentifyGARCHmodel}
+\input{sections/06Extramodels}
+\input{sections/07Testofourmodels}
+\input{sections/08Conclusion}
+
+\newpage
+\bibliographystyle{alpha}
+\bibliography{TSbib}
+
+\end{document}

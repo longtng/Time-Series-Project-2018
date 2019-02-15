@@ -1,0 +1,220 @@
+\section{Theoretical Overview}
+\label{sec:Theoretical}
+\subsection {Introduction about Time Series Analysis}
+A time series is a series of data, which was marked under an order of time.
+
+The goal of quantitative researchers is to identify trends, seasonal variations and correlation in financial data using statistical time series methods, and ultimately generate trading signals. In order to improve the profitability of our trading models, we must make use of statistical techniques to identify consistent behavior in assets which can be exploited to turn a profit. To find this behavior, we must explore how the properties of the asset prices themselves change in time.
+
+Time Series Analysis helps us to achieve this. It provides us with a robust statistical framework for assessing the behavior of time series, such as asset prices, in order to help us trade off of this behavior. Furthermore, the core theories of this part mainly rely on Pontier (2017) \cite{MPontier}, Tsay (2014) \cite{tsa2012} and Athanasopoulos and Hyndman (2013) \cite{hyndman2014forecasting} with detailed explanations. 
+
+\subsection {Stationarity, Autocorrelation and White Noise}
+		\subsubsection{Stationarity}  
+Stationarity is an extremely important aspect of time series - much of the analysis carried out on financial time series data involves identifying if the series we want to predict is stationary, and if it is not, finding ways to transform it such that it is stationary. 
+          \begin{itemize}
+          \item  Mean of a time series $x_t$ is $E(x_t)=\mu(t)$
+          \item  Variance of a time series $x_t$ is $\sigma^2(t)=E[(x_t - \mu(t))^2]$ 
+          \item  A time series is stationary in the mean if $\mu(t)=\mu$, i.e.mean is constant with time
+          \item  A time series is stationary in the variance if $\sigma^2(t)=\sigma^2$, i.e. variance is constant with time
+         \end{itemize}
+In short, A stationary time series (TS) is simple to predict as we can assume that future statistical properties are the same or proportional to current statistical properties. Most of the models we use in TSA assume covariance-stationarity. This means the predictions of these models - means, variances, and correlations, are only reliable if the TS is stationary and invalid otherwise.
+
+     	\subsubsection {Serial Correlation – Autocorrelation}
+A time series model decomposes the series into three components: Trend, Seasonal/cyclical and Random
+
+The random component is called the residual or error - the difference between our predicted value(s) and the observed value(s). Autocorrelation is when these residuals (errors) are correlated with each other. That is, if the error of the $i_{th}$ is dependent on errors of any of the terms $0 .. i-1$ before. Essentially, it tells us how sequential observations in a time series affect each other.
+		\begin{itemize}
+          \item  \textbf{ACF} \\
+Formally, for a covariance-stationary time series, the autocorrelation $\rho_k$ for lag $k$ (the number of time steps separating two sequential observations), 
+$$\rho_k = \frac{COV(x_t, x_{t - k})}{\sigma_x^2} = \frac{E[(x_t - \mu)(x_{t - k} - \mu)}{\sigma_x^2}$$ 
+A significant value of $\rho_k$ indicates that the error of the $i_{th}$ is dependent on the previous k terms from ${i-k} .. {i-1}$. 
+\\
+          \item  \textbf{PACF} \\
+Then the Partial Autocorrelation Function (PACF) is defined as:
+$$r(k) = Cor(X_t,X_{t+k}|X_{t+1},...,X_{t+k-1})$$ 
+The PACF of lag k is the conditional correlation of $X_t$ and $X_{t+k}$ conditioned on $X_{t+1},...,X_{t+k-1}$
+        \end{itemize}
+
+Briefly, Serial correlation is critical for the validity of our model predictions - The residuals (errors) of a stationary TS are serially uncorrelated by definition. It is critical we account for autocorrelation in our model otherwise the standard errors of our estimates for the parameters will be biased and underestimated, making any tests that we try to form using the model invalid In layman's terms, ignoring autocorrelation means we're likely to draw incorrect conclusions about the impact of the independent variables in our model.
+
+        \subsubsection {White Noise}
+        
+A white noise process is a time series that has serially uncorrelated errors and the expected mean of those errors is equal to zero. This means that the errors(residuals) are completely drawn at random from some probability distribution, i.e it is independent and identically distributed (i.i.d.). 
+
+If our time series model results in white noise residuals, it means we have successfully captured the underlying process and explained any form of correlation, only leaving errors(residuals) which are completely random. Our predicted values differ from the observed values only by a random error component that cannot be forecast or modeled.
+
+Most of the time series analysis is literally trying to fit a model to the time series such that the residual series is indistinguishable from white noise.
+
+     	\subsubsection {Random Walk}
+        
+A random walk is a time series model where the value of the time series variable increases or decreases (step up or down) with equal probability at each time step, that is the expected value of current observation is equal to the previous observation. It is formally defined below:
+
+$$x_t=x_{t-1}+w_t$$ , where $w_t$ is a discrete white noise series.
+$$E[x_t]=x_{t-1}$$
+
+This means if the TS we are modeling is a random walk it is unpredictable, as they are literally random walks.
+
+The significance of a random walk is that it is non-stationary because while the mean of a random walk is still zero, the covariance is actually time-dependent. In particular, the covariance is equal to the variance multiplied by the time. Hence, as time increases, so does the variance.
+ 
+\subsection {Auto Regressive(AR) and Moving Average(MA)}
+		\subsubsection {Autoregressive Models - AM(p)}
+        
+The autoregressive model is simply an extension of the random walk. It is essentially a regression model which depends linearly on the previous terms:
+$$x_t = \alpha_1x_{t-1}+…+\alpha_px_{t-p}+w_t = \sum_{i=1}^{p} t_i\alpha_ix_{t-i}+w_t$$
+
+This is an AR model of order "p", where $p$ represents the number of previous (or lagged) terms used within the model, $\alpha_i$ is the coefficient, and $w_t$ is a white noise term. Note that an AR(1) model with $\alpha_1$ set equal to 1 is a random walk!
+
+One of the most important aspects of the AR(p) model is that it is not always stationary. The stationarity of a particular model depends upon the parameters. For example, an AR(1) model with $\alpha_1$ = 1 is a random walk and therefore not stationary.
+\\
+     	\subsubsection {Moving Average Models - MA(q)}
+        
+MA(q) models are very similar to AR(p) models. MA(q) model is a linear combination of past error terms as opposed to a linear combination of past observations like the AR(p) model. The motivation for the MA model is that we can explain "shocks" in the error process directly by fitting a model to the error terms. (In an AR(p) model these shocks are observed indirectly by using past observations) 
+
+$$x_t=w_t+\beta_1w_{t-1}+…+\beta_qw_{t-q}$$ 
+
+Where $w_t$ is white noise with $E(w_t)=0$ and variance $\sigma^2$
+
+By definition, ACF $\rho_k$ should be zero for k>q.
+
+\subsection {ARMA model}
+		\subsubsection {Extended Autocorrelation Function - EACF}
+        
+According to \cite{tsa2012}, the ACF and PACF are not informative in determining the order of an ARMA model. Thus we should have to look at a new approach proposed by Tsay and Tiao (1984) that uses the extended autocorrelation function (EACF) to specify the order of an ARMA process. The basic idea of EACF is relatively simple. If we can obtain a consistent estimate of the AR component of an ARMA model, then we can derive the MA component. From the derived MA series, we can use ACF to identify the order of the MA component.
+\\
+The output of EACF is a two-way table, where the rows correspond to AR order p and the columns to MA order q. The theoretical version of EACF for an ARMA(1,2) model is given in Table 1. The key feature of the table is that it contains a triangle of “O” with the upper left vertex located at the order (1,2). This is the characteristic we use to identify the order of an ARMA process. In general, for an ARMA(p,q) model, the triangle of “O” will have its upper left vertex at the (p,q) position \\
+
+\FloatBarrier
+\begin{table}[!htbp]
+	\centering
+  \begin{tabular}{|l||*{8}{c|}}
+  \hline
+  \backslashbox{AR}{MA}
+  &\makebox[1em]{0}&\makebox[1em]{1}&\makebox[1em]{2}
+  &\makebox[1em]{3}&\makebox[1em]{4}&\makebox[1em]{5}
+  &\makebox[1em]{6}&\makebox[1em]{7} \\ 
+  \hline\hline
+  0 &*&X&X&X&X&X&X&X\\\hline
+  1 &*&X&O&O&O&O&O&O\\\hline
+  2 &*&*&X&O&O&O&O&O\\\hline
+  3 &*&*&*&X&O&O&O&O\\\hline
+  4 &*&*&*&*&X&O&O&O\\\hline
+  5 &*&*&*&*&*&X&O&O\\\hline
+  \end{tabular}
+  \caption{Simplified table for EACF of an ARMA(1,2) model}
+\end{table}
+\FloatBarrier
+
+The simplified table is constructed using the following notation:
+\begin{enumerate}
+\item “X” denotes that the absolute value of the corresponding EACF is greater than or equal to twice of its asymptotic standard error.
+\item “O”  denotes  that  the  corresponding  EACF  is  less  than  twice  of  its  standard error in modulus.
+\end{enumerate}
+The  standard  error  of  EACF  can  be  computed  using  either  the  Bartlett’s formula,  or  simply  $2 / \sqrt{T}$ with $T$ being  the  sample  size (like \textit{TSA} package does with R). \\
+
+		\subsubsection {Autoregressive Moving Average Models - ARMA(p, q)}
+        
+ARMA model is simply the merger between AR(p) and MA(q) models:
+		\begin{itemize}
+          \item  AR(p) models try to capture (explain) the momentum and mean reversion effects often observed in trading markets (market participant effects).
+          \item  MA(q) models try to capture (explain) the shock effects observed in the white noise terms. These shock effects could be thought of as unexpected events affecting the observation process e.g. Surprise earnings, A terrorist attack, etc.
+ 		\end{itemize}
+Hence, an ARMA model attempts to capture both of these aspects when modeling financial time series. Note that an ARMA model does not take into account volatility clustering, a fundamental empirical phenomenon of many financial time series which we will discuss later. 
+
+$$x_t=\alpha_1x_{t-1}+…+\alpha_px_{t-p}+w_t+\beta_1w_{t-1}+…+\beta_qw_{t-q}$$ 
+
+Where $w_t$ is white noise with $E(w_t)=0$ and variance $\sigma^2$
+
+An ARMA model will often require fewer parameters than an AR(p) or MA(q) model alone. That is, it is redundant in its parameters
+
+		\subsubsection {Information Criterion - AIC and BIC}
+
+There are several information criteria available to determine orders (p,q) of an ARMA process. All of them are likelihood based. \\
+When fitting models, it is possible to increase the likelihood by adding parameters, but doing so may result in overfitting. Both BIC and AIC criteria attempt to resolve this problem by introducing a penalty term for the number of parameters in the model. You will notice that the penalty term is larger in BIC than in AIC. \\
+Akaike Information Criterion (AIC) (Akaike, 1973) is defined as
+\begin{align}
+AIC = 2k - 2ln(\hat{L})
+\end{align}
+where $\hat{L}$ is the maximized value of the likelihood function of the model and $k$ is  the number of estimated parameters in the model.
+\\
+The second term of the AIC in Equation (1) measures the
+goodness of fit of the ARMA model to the data, whereas the first term is called the penalty function of the criterion because it penalizes a candidate model by the number of parameters used.
+\\
+Another  commonly  used  criterion  function  is  the  Schwarz – Bayesian  criterion (BIC, Bayesian information criterion).
+\begin{align}
+BIC = 2ln(n) - 2ln(\hat{L})
+\end{align}
+where $n$ is the the sample size, and other notations are the same as for AIC criterion.
+\\
+The penalty for each parameter used is 2 for AIC and $ln(n)$ for BIC.
+Thus, compared with AIC, BIC tends to select a lower ARMA model when the sample size is moderate or large.
+
+		\subsubsection {Other Model Accuracy Evaluation}
+        \begin{itemize}
+          \item  \textbf{Root Mean Square Error} \\
+Given a series $y_1 , . . . , y_t$ and fitting a model and compute the forecasts $F_1 , . . . , F_t$ . The root mean square error of the model is
+$$ RMSE = \sqrt{\frac{1}{t}\displaystyle\sum_{i=1}^{t}(y_i-F_i)^2} $$
+In general, we will pick up the minimum RMSE value as it is equivalent with minimizing the mean square error (MSE)
+
+          \item  \textbf{Mean Absolute Percent Error} \\
+An alternative to RMSE, the mean absolute percent error is:
+$$ MAPE = 100\frac{1}{t}\displaystyle\sum_{i=1}^{t}\mid \frac{y_i-F_i}{y_i}\mid $$
+which takes into account the relative error in the prediction, rather than the absolute error. We also pick the lowest value of MAPE.
+        \end{itemize}
+
+\subsection {ARCH and GARCH models}
+		\subsubsection {Conditional Heteroskedasticity}
+        
+The main motivation for studying Conditional Heteroskedasticity in finance is that of the volatility of asset returns.
+
+A collection of random variables is heteroskedastic if there are certain groups, or subsets, of variables within the larger set that have a different variance from the remaining variables.
+
+In finance, an increase in variance maybe correlated to a further increase in variance. For instance, on a day that equities markets undergo a substantial drop, automated risk management sell orders in long-only portfolios get triggered, which lead to further fall in the price of equities within these portfolios, leading to significant downward volatility.
+
+These "sell-off" periods, as well as many other forms of volatility, lead to heteroskedasticity that is serially correlated and hence conditional on periods of increased variance. Thus we say that such series are conditional heteroskedastic.
+
+One of the challenging aspects of conditional heteroskedastic series is ACF plots of a series with volatility might still appear to be a realization of stationary discrete white noise. This is even though the series is most definitely non-stationary as its variance is not constant in time.
+
+To incorporate Conditional Heteroskedasticity in our model, we can create a model that utilizes an autoregressive process for the variance itself - a model that actually accounts for the changes in the variance over time using past values of the variance.
+
+This is the basis of the Autoregressive Conditional Heteroskedastic (ARCH) model.
+\\
+     	\subsubsection {Autoregressive Conditionally Heteroskedastic - ARCH(p)}
+ARCH(p) models can be thought of as simply an AR(p) model applied to the variance of a time series.
+
+$$Var(\varepsilon_t) = \alpha_0 + \alpha_1Var(\varepsilon_{t-1})+…+\alpha_pVar(\varepsilon_{t-p})+w_t$$
+
+The actual time series is given by:
+
+$$\varepsilon_t = w_t\sqrt{\alpha_0 + \alpha_1\varepsilon_{t-1}^2+…+\alpha_p\varepsilon_{t-p}^2}$$
+
+For ARCH(1), this reads:
+$$\varepsilon_t = w_t\sqrt{\alpha_0+\alpha_1\varepsilon_{t-1}^2}$$
+
+Furthermore, when we were attempting to fit an AR(p) model and are concerned with the decay of the pp lag on an ACF plot of the series, we can apply the same logic to the square of the residuals. If we find that we can apply an AR(p) to these square residuals, then we indicate that an ARCH(p) process may be appropriate.
+
+Note that ARCH(p) should only ever be applied to a series that has already had an appropriate model fitted sufficient to leave the residuals looking like discrete white noise. Since we can only tell whether the ARCH is appropriate or not by squaring the residuals and examining the ACF, we also need to ensure that the mean of the residuals is zero.
+
+ARCH should only ever be applied to series that do not have any trends or seasonal effects, i.e., that has no (evident) serially correlation. ARIMA is often applied to such a series, at which point ARCH may be a good fit.
+\\
+        \subsubsection {Generalized Autoregressive Conditionally Heteroskedastic - GARCH(p,q)}
+GARCH(p, q)  is an ARMA model applied to the variance of a time series i.e., it has an autoregressive term and a moving average term. The AR(p) models the variance of the residuals (squared errors) or simply our time series squared. The MA(q) portion models the variance of the process.
+
+$$\varepsilon_t = \sigma_t w_t$$
+
+Where $w_t$ is discrete white noise, with zero mean and unit variance, and $\sigma^2$ is given by:
+
+$$\sigma_t^2=\alpha_0+\sum_{i=1}^{p}\alpha_i\varepsilon_{t-i}^2+\sum_{j=1}^{q}\beta_j\sigma_{t-j}^2$$
+
+Where $\alpha_i$ and $\beta_j$ are parameters of the model.For GARCH(1,1), $\sigma^2$ is:
+
+$$\sigma_t^2=\alpha_0+\alpha_1\varepsilon_{t-1}^2+\beta_1\sigma_{t-1}^2$$
+
+$\alpha_1 + \beta_1$ must be less than 1 or the model is unstable.
+\\
+		\subsubsection {Steps of ARCH/GARCH in Application:}
+        \begin{itemize}
+          \item  Iterate through combinations of ARIMA(p, d, q) models to best fit our time series.
+          \item  Verify the ARCH Effect, Autocorrelation and Distribution of the Residual from ARIMA(p,d,q)
+          \item  Pick the GARCH model orders according to the ARIMA model with lowest AIC/BIC.
+          \item  Fit the GARCH(p, q) model to our time series.
+          \item  Examine the model residuals and squared residuals for autocorrelation
+        \end{itemize}
