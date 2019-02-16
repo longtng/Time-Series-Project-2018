@@ -67,7 +67,7 @@ Table 5 shows the sample EACF and Table 4 its corresponding simplified table for
 \end{table}
 \FloatBarrier
 
-The simplified  table exhibits  a  triangular  pattern  of  “O”  with  its  upper  left  vertex  at  the  order  (p,q) = (1,0).
+The simplified  table 4 exhibits  a  triangular  pattern  of  “O”  with  its  upper  left  vertex  at  the  order  (p,q) = (1,0).
 A few exceptions of “X” appear when q = 2, 4, 5, 6 and 7.
 However, the EACF table  shows  that  the  values  of  sample  ACF  corresponding  to  those  “X”  are  around 0.08 or 0.09.
 These ACFs are only slightly greater than $2 / \sqrt{1280} = 0.0559$. Indeed, if 3\% critical value is used, those “X” would become “O” in the simplified EACF table.
@@ -179,7 +179,7 @@ From the partial autocorrelogram (Figure 11), we see that the partial autocorrel
 According to our results, we decided to work with an ARMA(1,0) model, since it is the one selected by EACF method, BIC criterion, and $auto.arima()$ function. Other models that could have been selected are ARMA(7,7) for its best AIC value, or ARMA(3,2) to get a compromise between ARMA(1,0) and ARMA(7,7) as explained above.\\
 
 
-Therefore, we deduce from the Listing 3, noting our time series $(X)_t$, that
+Therefore, we deduce from the Listing 3, noting our time series $(X_t)$, that
 \begin{align*}
 X_t−0,0022 
  	&= 0,9621[X_{t-1}−0,0022] + W_t \\
