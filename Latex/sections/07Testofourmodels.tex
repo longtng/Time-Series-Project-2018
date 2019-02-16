@@ -8,7 +8,7 @@ For MAPE and RMSE values over the testing period, we had to recomposed the times
 \\
 \underline{Remark :} A deterministic trend is obtained using the regression model $yt=\beta_0+\beta_1t+\eta_t$, where $\eta_t$ is an ARMA process. A stochastic trend is obtained using the model $yt=\beta_0+\beta_1t+\eta_t$, where $\eta_t$ is an ARIMA process with $d=1$.
 \\
-Tests performed have shown that a deterministic trend gives better results for ARMA models selected, stochastic trend is better for the ARIMA(5,1,0) model, Holt-Winters’ damped method is more appropriate for the SARIMA(5,1,0)(0,1,0)[256]. Thus we stored MAPE and RMSE values in the Table 11 for these combinations of models.
+Tests performed have shown that a deterministic trend gives better results for ARMA models selected, stochastic trend is better for the ARIMA(5,1,0) model, Holt-Winters’ damped method is more appropriate for the SARIMA(5,1,0)(0,1,0). Thus we stored MAPE and RMSE values in the Table 11 for these combinations of models.
 \\
 \FloatBarrier
 \begin{table}[!htbp]
@@ -40,7 +40,7 @@ According to the previous results, we chose  to look at forecasts from both ARMA
 \FloatBarrier
 \begin{figure}[!htbp]
   \centering
-  \includegraphics[width=\textwidth]{img/FC.eps}
+      \includegraphics[width=\textwidth]{img/FC.eps}
   \caption{Price forecast with ARMA(7,7) \& ARIMA(5,1,0)}
 \end{figure}
 \FloatBarrier
