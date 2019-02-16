@@ -118,7 +118,7 @@ And we distinguish 2 kinds of decomposition for a time series :
 \end{enumerate}
 
 \subsubsection{Seasonality of the time series}
-According to Figure X (above), there is no apparent seasonality in the data over this period, neither apparent cycle. Thus we could skip the seasonal adjustment and work on the trend of the time series. \\
+According to Figure 3 (above), there is no apparent seasonality in the data over this period, neither apparent cycle. Thus we could skip the seasonal adjustment and work on the trend of the time series. \\
 On top of that, removing seasonality is not a mandatory step here, since with R we can build an ARMA model with orders (p,q) for the deseasonal part, and orders (P,Q) for the seasonal component. Such orders can be easily detected with the function \textit{auto.arima()}. \\
 But for practice, this step will still be performed.
 
@@ -190,7 +190,7 @@ For the trend component, we also have two ways to remove it :
 \item Using function \textit{diff()}.
 \end{enumerate}
 
-With R, \textit{diff()} function returns, given a time series $(X)_t$ as parameter, a time series $(Z)_t$ which is the differences between all consecutive values of $(X)_t$. In other words, $Z_t = X_{t+1} - X_t$. If $(X)_t$ is not stationary but $(Z)_t$ is, then we can identify an ARMA($p_z$,$q_z$) model for $(Z)_t$, which will be an ARIMA($p_z$,$1$,$q_z$) for $(X)_t$. Indeed, each use of the \textit{diff()} transformation increments by 1 the order $d$. If it happens that $d=1$ is not enough to get a stationary series, then we try with higher values of $d$ until the series is stationary. \\
+With R, \textit{diff()} function returns, given a time series $(X_t)$ as parameter, a time series $(Z_t)$ which is the differences between all consecutive values of $(X_t)$. In other words, $Z_t = X_{t+1} - X_t$. If $(X_t)$ is not stationary but $(Z_t)$ is, then we can identify an ARMA($p_z$,$q_z$) model for $(Z_t)$, which will be an ARIMA($p_z$,$1$,$q_z$) for $(X_t)$. Indeed, each use of the \textit{diff()} transformation increments by 1 the order $d$. If it happens that $d=1$ is not enough to get a stationary series, then we try with higher values of $d$ until the series is stationary. \\
 Here we decided to first try to remove the trend-cycle component of the deseasonalized series, before taking an interest in the differentiated series. The result is available in Figure 9 below.
 
 \FloatBarrier
